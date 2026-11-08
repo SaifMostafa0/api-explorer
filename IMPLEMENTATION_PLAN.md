@@ -4,10 +4,6 @@ Source of truth: [`PROJECT_SPEC.md`](PROJECT_SPEC.md), including its **Amendment
 One milestone at a time. A milestone is done only when `npm run ci` passes and `STATUS.md` is updated
 with what was actually run.
 
-**Who writes what:** milestones 2, 3 and 5 are the core of the project and are written by Saif.
-AI tools review diffs, suggest test cases and handle tooling. Anything an AI wrote is marked in the PR
-description.
-
 ## MVP (target: early December 2026)
 
 ### M1 — Architecture, HTTP behaviour, security decisions ✅
@@ -18,7 +14,7 @@ description.
   `docs/testing-strategy.md`, ADRs 0001–0002.
 - Check: `npm run ci` green.
 
-### M2 — Request domain model and request construction (Saif)
+### M2 — Request domain model and request construction
 
 Files: `src/domain/request.ts`, `src/domain/validation.ts`, `src/http/buildRequest.ts`.
 
@@ -32,7 +28,7 @@ Files: `src/domain/request.ts`, `src/domain/validation.ts`, `src/http/buildReque
 4. Private-network detection helper for the confirmation warning (ADR 0002).
 5. Unit tests for every bullet in spec §14 "Test request building". Coverage gates apply here.
 
-### M3 — Transport, response parsing, error classification, timeout, cancellation (Saif)
+### M3 — Transport, response parsing, error classification, timeout, cancellation
 
 Files: `src/infrastructure/http/fetchClient.ts`, `timeout.ts`, `src/http/parseResponse.ts`,
 `src/http/classifyError.ts`, `src/domain/response.ts`, `src/domain/errors.ts`.
@@ -52,7 +48,7 @@ Method selector, URL bar, Send/Cancel, Params / Headers / Body tabs with editabl
 inline validation messages, double-click protection, confirmation dialog for private-network
 targets and for unsafe methods on the live demo. Component tests through a mocked transport.
 
-### M5 — Response inspector (Saif)
+### M5 — Response inspector
 
 Status bar (code, text, duration, size, non-colour status label), Body / Headers / Details tabs,
 formatted vs raw JSON, truncation notice, "headers not exposed by CORS" vs "no headers",

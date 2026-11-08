@@ -740,5 +740,3 @@ These amendments take precedence over the sections above where they conflict. Th
 4. **Added after the MVP:** environments with `{{variable}}` substitution (secret values never
    persisted by default) and cURL import/export (import never executes anything; export redacts
    sensitive headers unless the user opts in).
-5. **Authorship:** Saif writes the domain, HTTP and inspector code himself; AI tools review, write
-   test ideas and handle tooling. See `AGENTS.md`.
