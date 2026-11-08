@@ -2,8 +2,22 @@
 
 _Last updated: 8 Nov 2026_
 
-**Current milestone:** M2 done and merged into `main`. Next: M3 (transport,
-response parsing, error classification, timeout, cancellation).
+**Current milestone:** M3 done and merged into `main`. Next: M4 (request workspace UI).
+
+## M3 results (run 8 Nov 2026, Windows)
+
+- `npm run ci` passed end to end on **Node 24.21.0 and Node 22.23.4**: 196 tests (83 new),
+  no unhandled errors. Gated coverage: 98.8% statements, 93.9% branches (gates: 80 / 75).
+- New: `domain/response.ts`, `domain/errors.ts`, `http/parseResponse.ts`, `http/classifyError.ts`,
+  `infrastructure/http/{timeout,fetchClient,requestSession}.ts`, test factories in
+  `src/test/factories/`.
+- Covered: every spec §14 "response parsing" and "error classification" bullet, timeout during
+  body download, no timers left after any outcome, double-click guard, stale-run protection and
+  dispose-on-unmount.
+- Contract changes recorded in `docs/http-model.md` ("Changes in M3"): `headerExposure` instead
+  of `headers: null`, `parse: 'truncated'`, streamed body read.
+- Not tested against a real network or browser yet: transports are fakes. Real CORS and
+  mixed-content behaviour is checked in M9 (Playwright) and on the deploy.
 
 ## M2 results (run 8 Nov 2026, Windows)
 
