@@ -33,7 +33,7 @@ function renderWorkspace(overrides: Partial<WorkspaceEnvironment> = {}) {
 
 const urlInput = () => screen.getByRole('textbox', { name: 'URL' })
 const sendButton = () => screen.getByRole('button', { name: 'Send' })
-const status = () => screen.getByRole('status')
+const status = () => screen.getByRole('status', { name: 'Request status' })
 const sentRequest = (transport: Transport) => vi.mocked(transport).mock.calls[0]?.[0]
 
 afterEach(() => vi.useRealTimers())
@@ -88,7 +88,7 @@ describe('building and sending', () => {
     const transport = respondWith(() => jsonResponse({}))
     const { user } = renderWorkspace({ transport })
     await user.type(urlInput(), 'https://api.example.test{Enter}')
-    expect(await screen.findByText(/^Success/)).toBeInTheDocument()
+    expect(await screen.findByText(/^Success:/)).toBeInTheDocument()
     expect(transport).toHaveBeenCalledTimes(1)
   })
 })
@@ -201,7 +201,7 @@ describe('editing rows', () => {
     await user.keyboard('debug')
     await user.click(screen.getByRole('checkbox', { name: 'Send parameter 1' }))
     await user.click(sendButton())
-    await screen.findByText(/^Success/)
+    await screen.findByText(/^Success:/)
     expect(sentRequest(transport)?.url).toBe('https://api.example.test/')
   })
 })
@@ -230,19 +230,22 @@ describe('results', () => {
     const transport = respondWith(() => new Response(html, { headers: { 'content-type': 'text/html' } }))
     const { user, container } = renderWorkspace({ transport })
     await user.type(urlInput(), 'https://api.example.test{Enter}')
-    await screen.findByText(/^Success/)
+    await screen.findByText(/^Success:/)
     expect(screen.getByLabelText('Response body')).toHaveTextContent(html)
     expect(container.querySelector('img, script')).toBeNull()
     expect((window as { __pwned?: boolean }).__pwned).toBeUndefined()
   })
 
-  it('announces results through a single short status message', async () => {
+  it('announces a short sentence, never the body', async () => {
     const { user } = renderWorkspace()
     expect(status()).toHaveTextContent('No request sent yet.')
     await user.type(urlInput(), 'https://api.example.test{Enter}')
-    await screen.findByText(/^Success/)
-    expect(screen.getAllByRole('status')).toHaveLength(1)
-    expect(status()).not.toHaveTextContent('"ok"')
+    await screen.findByText(/^Success:/)
+    expect(status()).toHaveTextContent(/^Success: 200 in \d+ ms$/)
+    // The only other live regions are the copy buttons' own, empty until a copy happens.
+    for (const region of screen.getAllByRole('status')) {
+      expect(region).not.toHaveTextContent('"ok"')
+    }
   })
 })
 
@@ -313,7 +316,7 @@ describe('confirmation', () => {
     const { user } = renderWorkspace({ transport, pageProtocol: 'http:' })
     await user.type(urlInput(), 'http://localhost:3000/health{Enter}')
     await user.click(screen.getByRole('button', { name: 'Send anyway' }))
-    expect(await screen.findByText(/^Success/)).toBeInTheDocument()
+    expect(await screen.findByText(/^Success:/)).toBeInTheDocument()
     expect(transport).toHaveBeenCalledTimes(1)
   })
 
