@@ -10,9 +10,15 @@ response parsing, error classification, timeout, cancellation).
 - **Node 22.23.4 (the version CI pins): `npm run ci` passed end to end.** Format check, ESLint,
   `tsc -b`, Vitest (116 tests: 113 new M2 unit tests plus the 3 M1 smoke tests) and production
   build. Coverage for the gated modules: 98.8% statements, 93.1% branches (gates: 80 / 75).
-- **Node 24.21 (local default): one M1 test fails**, "navigates between sections from the main
-  nav", on `main` too. React Router builds a `Request` with jsdom's `AbortSignal`, which Node 24's
-  undici rejects. Run the gates on Node 22 until that is fixed.
+- Node 24.21 initially failed the M1 nav test (jsdom's `AbortSignal` rejected by Node 24's
+  `Request`). Fixed the same day, see below.
+
+## Test-environment fix (run 8 Nov 2026, Windows)
+
+- `src/test/jsdom-environment.ts`: jsdom environment that keeps Node's native
+  `AbortController`/`AbortSignal`; `src/test/environment.test.ts` guards it.
+- `.gitattributes` forces LF so Prettier passes on Windows checkouts.
+- `npm run ci` passed end to end on **Node 24.21.0 and Node 22.23.4**: 118 tests, same coverage.
 
 What M2 covers: request types (`src/domain/request.ts`), URL / header / JSON validators, secret
 redaction rules, private-network detection (ADR 0002, plus `0.0.0.0/8`, IPv6 unique-local,
