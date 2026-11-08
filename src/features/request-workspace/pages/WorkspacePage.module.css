@@ -109,3 +109,30 @@
     grid-area: send;
   }
 }
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+.samples {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+.samples select {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
+  max-width: 16rem;
+}
+.sampleNote {
+  margin: -0.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}

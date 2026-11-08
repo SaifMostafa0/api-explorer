@@ -365,3 +365,30 @@ describe('keyboard', () => {
     expect(screen.getByRole('tab', { name: 'Body' })).toHaveAttribute('tabindex', '-1')
   })
 })
+
+describe('samples', () => {
+  it('loads a sample into the editor and opens the relevant tab', async () => {
+    const transport = respondWith(() => jsonResponse({ products: [] }))
+    const { user } = renderWorkspace({ transport })
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Try a sample' }), 'query')
+
+    expect(urlInput()).toHaveValue('https://dummyjson.com/products/search')
+    expect(screen.getByRole('tab', { name: 'Params 3' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByText(/encoded and added to the URL/)).toBeInTheDocument()
+
+    await user.click(sendButton())
+    await screen.findByText(/^Success:/)
+    expect(sentRequest(transport)?.url).toBe(
+      'https://dummyjson.com/products/search?q=phone&limit=3&select=title%2Cprice',
+    )
+  })
+
+  it('opens the Body tab for the POST sample', async () => {
+    const { user } = renderWorkspace()
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Try a sample' }), 'post')
+    expect(screen.getByRole('combobox', { name: 'Method' })).toHaveValue('POST')
+    expect((screen.getByRole('textbox', { name: 'JSON body' }) as HTMLTextAreaElement).value).toContain(
+      '"Ada Lovelace"',
+    )
+  })
+})

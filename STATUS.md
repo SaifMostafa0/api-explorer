@@ -2,8 +2,19 @@
 
 _Last updated: 8 Nov 2026_
 
-**Current milestone:** M5 done and merged into `main`. The MVP features (M1–M5) are complete.
-Next: MVP deploy (GitHub repo, Vercel, CSP and direct-route checks, sample requests, README).
+**Current milestone:** MVP deploy in progress. The MVP features (M1–M5) are complete.
+
+## Deploy prep (run 8 Nov 2026, Windows)
+
+- Sample requests (`Try a sample`): DummyJSON and httpbin only. Checked with an `Origin`
+  header: both reachable from this network and both send `Access-Control-Allow-Origin`.
+  jsonplaceholder was unreachable (timeout) and postman-echo sends no CORS header, so neither is
+  used.
+- CSP `connect-src` now allows `http://localhost`, `127.0.0.1` and `[::1]` on any port; before,
+  `https:` alone blocked local APIs on the hosted demo. Guarded by `src/test/deployConfig.test.ts`.
+- Fixed: request tab names read "Params3" to screen readers (the space was inside the count's
+  span). Now "Params 3".
+- `npm run ci` passed on Node 24.21.0 and Node 22.23.4: 320 tests, same coverage as M5.
 
 ## M5 results (run 8 Nov 2026, Windows)
 
