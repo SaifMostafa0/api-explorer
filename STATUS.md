@@ -2,7 +2,7 @@
 
 _Last updated: 8 Nov 2026_
 
-**Current milestone:** M2 done on branch `m2-request-model` (not merged yet). Next: M3 (transport,
+**Current milestone:** M2 done and merged into `main`. Next: M3 (transport,
 response parsing, error classification, timeout, cancellation).
 
 ## M2 results (run 8 Nov 2026, Windows)
