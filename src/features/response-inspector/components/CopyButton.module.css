@@ -1,0 +1,25 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.button {
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.3rem 0.65rem;
+  cursor: pointer;
+}
+.feedback {
+  font-size: 0.8125rem;
+}
+.feedback[data-state='copied'] {
+  color: var(--success);
+}
+.feedback[data-state='failed'] {
+  color: var(--danger);
+}

@@ -2,7 +2,27 @@
 
 _Last updated: 8 Nov 2026_
 
-**Current milestone:** M4 done and merged into `main`. Next: M5 (response inspector).
+**Current milestone:** M5 done and merged into `main`. The MVP features (M1–M5) are complete.
+Next: MVP deploy (GitHub repo, Vercel, CSP and direct-route checks, sample requests, README).
+
+## M5 results (run 8 Nov 2026, Windows)
+
+- `npm run ci` passed end to end on **Node 24.21.0 and Node 22.23.4**: 299 tests (51 new: 29
+  inspector component tests, 22 formatting unit tests). Gated coverage unchanged: 99.5%
+  statements, 95.4% branches (the inspector is UI and isn't gated).
+- New: `src/features/response-inspector/` (status bar, Body / Headers / Details tabs, copy button,
+  formatting helpers). Replaces the M4 `ResultSummary`.
+- Manually checked in the in-app browser (Chromium, `npm run dev`):
+  - `GET https://httpbin.org/json`: 200, "Success", 433 ms, 429 B; formatted and raw JSON;
+    Headers tab shows 2 headers (content-length, content-type) with the CORS-filtered notice;
+    Details shows the HTTP/2 "no status text" note.
+  - `GET https://httpbin.org/status/404` in light mode at 375 px: "404" badge with "Client
+    error", empty body message, no horizontal scroll.
+  - Copy: the in-app browser denies clipboard access even for real clicks, so the failure message
+    was confirmed but the **success path was not**. Text selection on failure could not be
+    checked because the browser pane was hidden (background page). Both still need a check in a
+    normal browser.
+- Not checked yet: a screen reader, Lighthouse, the production build in a browser.
 
 ## M4 results (run 8 Nov 2026, Windows)
 

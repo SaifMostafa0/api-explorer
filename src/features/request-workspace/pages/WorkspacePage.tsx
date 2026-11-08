@@ -6,7 +6,7 @@ import { BodyEditor } from '../components/BodyEditor'
 import { ConfirmSendDialog } from '../components/ConfirmSendDialog'
 import { BODY_TEXT_ID, URL_INPUT_ID, bodyModeInputId, rowInputId } from '../components/fieldIds'
 import { KeyValueTable, type RowMessages } from '../components/KeyValueTable'
-import { ResultSummary } from '../components/ResultSummary'
+import { ResponseInspector } from '../../response-inspector/components/ResponseInspector'
 import { useWorkspaceEnvironment } from '../environment'
 import { useRequestRunner } from '../hooks/useRequestRunner'
 import { getSendChecks, tabOfField } from '../state/sendChecks'
@@ -236,7 +236,7 @@ export function WorkspacePage() {
         />
       </form>
 
-      <ResultSummary state={state} />
+      <ResponseInspector state={state} />
 
       {confirming ? (
         <ConfirmSendDialog
