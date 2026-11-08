@@ -22,6 +22,14 @@ export type WorkspaceAction =
   | { type: 'add-row'; table: RowTable; id: string }
   | { type: 'update-row'; table: RowTable; id: string; patch: Partial<Omit<EditableRow, 'id'>> }
   | { type: 'remove-row'; table: RowTable; id: string }
+  /** Replace the editable parts (e.g. with a sample). Id, name and timestamps are kept. */
+  | {
+      type: 'load'
+      request: Pick<
+        RequestConfiguration,
+        'method' | 'url' | 'query' | 'headers' | 'bodyMode' | 'body' | 'formFields'
+      >
+    }
 
 let rowCounter = 0
 /** Unique within the page. Not crypto.randomUUID: that only exists in secure contexts. */
@@ -73,6 +81,8 @@ export function workspaceReducer(state: RequestConfiguration, action: WorkspaceA
       )
     case 'remove-row':
       return updateTable(state, action.table, (rows) => rows.filter((row) => row.id !== action.id))
+    case 'load':
+      return { ...state, ...action.request }
   }
 }
 

@@ -84,6 +84,26 @@ describe('workspaceReducer', () => {
     expect(state.query).toHaveLength(0)
   })
 
+  it('loads a whole request but keeps id and timestamps', () => {
+    const state = apply(
+      { type: 'set-body', body: 'old' },
+      {
+        type: 'load',
+        request: {
+          method: 'POST',
+          url: 'https://api.example.test',
+          query: [],
+          headers: [{ id: 'h', name: 'Accept', value: '*/*', enabled: true }],
+          bodyMode: 'json',
+          body: '{}',
+          formFields: [],
+        },
+      },
+    )
+    expect(state).toMatchObject({ id: 'workspace', method: 'POST', body: '{}', createdAt: initial.createdAt })
+    expect(state.headers).toHaveLength(1)
+  })
+
   it('does not mutate the previous state', () => {
     const before = apply({ type: 'add-row', table: 'query', id: 'a' })
     workspaceReducer(before, { type: 'update-row', table: 'query', id: 'a', patch: { key: 'x' } })

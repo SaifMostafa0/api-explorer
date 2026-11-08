@@ -8,6 +8,7 @@ import { BODY_TEXT_ID, URL_INPUT_ID, bodyModeInputId, rowInputId } from '../comp
 import { KeyValueTable, type RowMessages } from '../components/KeyValueTable'
 import { ResponseInspector } from '../../response-inspector/components/ResponseInspector'
 import { useWorkspaceEnvironment } from '../environment'
+import { SAMPLES } from '../samples'
 import { useRequestRunner } from '../hooks/useRequestRunner'
 import { getSendChecks, tabOfField } from '../state/sendChecks'
 import {
@@ -29,6 +30,7 @@ export function WorkspacePage() {
   const [tab, setTab] = useState<TabId>('params')
   const [showErrors, setShowErrors] = useState(false)
   const [confirming, setConfirming] = useState(false)
+  const [loadedSample, setLoadedSample] = useState<string | null>(null)
   const [focusTarget, setFocusTarget] = useState<string | null>(null)
 
   const checks = useMemo(() => getSendChecks(config, environment), [config, environment])
@@ -83,7 +85,12 @@ export function WorkspacePage() {
   const tabLabel = (text: string, count: number, hasErrors: boolean) => (
     <>
       {text}
-      {count > 0 ? <span className={styles.count}> {count}</span> : null}
+      {count > 0 ? (
+        <>
+          {' '}
+          <span className={styles.count}>{count}</span>
+        </>
+      ) : null}
       {hasErrors ? (
         <span className={styles.tabError}>
           {' '}
@@ -99,9 +106,38 @@ export function WorkspacePage() {
 
   return (
     <section aria-labelledby="request-workspace-title" className={styles.workspace}>
-      <h1 id="request-workspace-title" className={styles.heading}>
-        Request workspace
-      </h1>
+      <div className={styles.header}>
+        <h1 id="request-workspace-title" className={styles.heading}>
+          Request workspace
+        </h1>
+        <div className={styles.samples}>
+          <label htmlFor="sample-picker">Try a sample</label>
+          <select
+            id="sample-picker"
+            value=""
+            onChange={(event) => {
+              const sample = SAMPLES.find((s) => s.id === event.target.value)
+              if (!sample) return
+              const request = sample.build()
+              dispatch({ type: 'load', request })
+              setShowErrors(false)
+              setLoadedSample(sample.description)
+              // Open the tab that shows what makes this sample interesting.
+              setTab(request.bodyMode !== 'none' ? 'body' : request.headers.length > 0 ? 'headers' : 'params')
+            }}
+          >
+            <option value="" disabled>
+              Choose…
+            </option>
+            {SAMPLES.map((sample) => (
+              <option key={sample.id} value={sample.id}>
+                {sample.title}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      {loadedSample ? <p className={styles.sampleNote}>{loadedSample}</p> : null}
 
       <form onSubmit={onSubmit} noValidate className={styles.form} aria-busy={running}>
         <div className={styles.bar}>

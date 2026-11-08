@@ -16,4 +16,8 @@ networks the user's browser couldn't reach anyway.
 | Telemetry                       | None.                                                                                                                                                                                                                                                                                           |
 | Stored / imported data          | Parsed as `unknown`, validated with Zod, size and record limits on import.                                                                                                                                                                                                                      |
 
+CSP `connect-src` allows any `https:` API plus `http://localhost`, `127.0.0.1` and `[::1]` on any port,
+because browsers let an https page call loopback servers and testing a local API is a core use case
+(ADR 0002). Other `http:` targets are blocked twice: by the browser (mixed content) and by the CSP.
+
 Anything in the frontend bundle is public. There are no secrets in env vars.
