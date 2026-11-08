@@ -1,0 +1,54 @@
+.editor {
+  display: grid;
+  gap: 0.75rem;
+}
+.modes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.modes legend {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  padding: 0;
+}
+.mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.label {
+  font-weight: 600;
+}
+.textarea {
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.6rem;
+  width: 100%;
+  resize: vertical;
+  tab-size: 2;
+}
+.textarea[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+.hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+.error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.875rem;
+}
+.error::before {
+  content: 'Error: ';
+  font-weight: 600;
+}

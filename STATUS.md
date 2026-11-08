@@ -2,7 +2,25 @@
 
 _Last updated: 8 Nov 2026_
 
-**Current milestone:** M3 done and merged into `main`. Next: M4 (request workspace UI).
+**Current milestone:** M4 done and merged into `main`. Next: M5 (response inspector).
+
+## M4 results (run 8 Nov 2026, Windows)
+
+- `npm run ci` passed end to end on **Node 24.21.0 and Node 22.23.4**: 248 tests (52 new: 25
+  component tests through a fake transport, plus reducer, send-check and mixed-content unit
+  tests). Gated coverage: 99.5% statements, 95.4% branches. UI files aren't coverage-gated.
+- Manually checked in the in-app browser (Chromium, `npm run dev`), dark mode:
+  - Real GET to `https://httpbin.org/get?existing=a%20b` with a `postId` table param: 200, both
+    params echoed, `Cache-Control: no-cache` sent.
+  - `jsonplaceholder.typicode.com` is unreachable from this network (curl times out too); the app
+    showed the network-failure view with causes, no invented status.
+  - `localhost:3000/health` shows "Add a scheme…", focus moves to the URL; with `http://` the
+    private-network dialog opens with focus on "Don't send"; Escape closes it without sending.
+  - 375 px wide: no horizontal scroll, URL and row values wrap onto their own lines.
+- Not checked yet: light mode by eye, a screen reader, Lighthouse, the production build in a
+  browser (where unsafe-method confirmation is on).
+- The response area is a basic status line plus text preview; M5 replaces the preview with the
+  inspector (Body / Headers / Details tabs).
 
 ## M3 results (run 8 Nov 2026, Windows)
 
