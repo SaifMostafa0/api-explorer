@@ -1,0 +1,111 @@
+.workspace {
+  max-width: 64rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.25rem;
+}
+.heading {
+  font-size: 1.25rem;
+  margin: 0;
+}
+.form {
+  display: grid;
+  gap: 0.75rem;
+}
+.bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.5rem;
+}
+.method,
+.url {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+}
+.method {
+  font-weight: 700;
+}
+.url {
+  font-family: var(--mono);
+  font-size: 0.9375rem;
+  min-width: 0;
+}
+.url[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+.send,
+.cancel {
+  font: inherit;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+}
+.send {
+  color: var(--on-accent);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+}
+.cancel {
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--danger);
+}
+.error,
+.warning,
+.hint {
+  margin: 0;
+  font-size: 0.875rem;
+}
+.error {
+  color: var(--danger);
+}
+.error::before {
+  content: 'Error: ';
+  font-weight: 600;
+}
+.warning::before {
+  content: 'Warning: ';
+  font-weight: 600;
+}
+.hint {
+  margin-top: 0.75rem;
+  color: var(--text-muted);
+}
+.summary {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--danger);
+  border-radius: 6px;
+  font-weight: 600;
+}
+.count {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.tabError {
+  color: var(--danger);
+  font-weight: 700;
+}
+@media (max-width: 560px) {
+  /* Method and Send on the first line, the URL at full width underneath. */
+  .bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'method send'
+      'url url';
+  }
+  .method {
+    grid-area: method;
+  }
+  .url {
+    grid-area: url;
+  }
+  .send,
+  .cancel {
+    grid-area: send;
+  }
+}
