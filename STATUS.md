@@ -5,16 +5,14 @@ _Last updated: 8 Nov 2026_
 **Current milestone:** M2 done on branch `m2-request-model` (not merged yet). Next: M3 (transport,
 response parsing, error classification, timeout, cancellation).
 
-## M2 results (run 8 Nov 2026, Node 24.21, Windows)
+## M2 results (run 8 Nov 2026, Windows)
 
-- Format check, ESLint, `tsc -b` and production build passed.
-- Vitest: 113 new unit tests passing across `src/domain/validation.ts`, `src/domain/redaction.ts`,
-  `src/http/privateNetwork.ts` and `src/http/buildRequest.ts`. Coverage for the gated modules:
-  98.8% statements, 93.1% branches (gates: 80 / 75).
-- **`npm run ci` did not pass end to end on this machine.** The M1 test "navigates between sections
-  from the main nav" fails on Node 24 on `main` as well: React Router builds a `Request` with
-  jsdom's `AbortSignal`, which Node 24's undici rejects. The CI workflow pins Node 22, where M1
-  passed. Not yet re-run on Node 22.
+- **Node 22.23.4 (the version CI pins): `npm run ci` passed end to end.** Format check, ESLint,
+  `tsc -b`, Vitest (116 tests: 113 new M2 unit tests plus the 3 M1 smoke tests) and production
+  build. Coverage for the gated modules: 98.8% statements, 93.1% branches (gates: 80 / 75).
+- **Node 24.21 (local default): one M1 test fails**, "navigates between sections from the main
+  nav", on `main` too. React Router builds a `Request` with jsdom's `AbortSignal`, which Node 24's
+  undici rejects. Run the gates on Node 22 until that is fixed.
 
 What M2 covers: request types (`src/domain/request.ts`), URL / header / JSON validators, secret
 redaction rules, private-network detection (ADR 0002, plus `0.0.0.0/8`, IPv6 unique-local,
