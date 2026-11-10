@@ -6,6 +6,11 @@ classification, and safe handling of untrusted responses.
 
 **Live demo:** https://api-explorer-swart.vercel.app · **Status:** MVP (milestones 1–5) complete, see [STATUS.md](STATUS.md)
 
+[![A 57-second tour of API Explorer: sending a request, CORS-hidden headers, validation, query params, cancelling a slow request, and the private-network confirmation](docs/media/demo.gif)](docs/media/demo.mp4)
+
+[Watch the demo as MP4 (57 s, 3.6 MB)](docs/media/demo.mp4). It was recorded on the live site with
+Playwright; the cursor, captions and spotlight are an overlay added only in the recording browser.
+
 ## What it does
 
 - **Build requests:** GET, POST, PUT, PATCH, DELETE; query params and headers as editable rows
