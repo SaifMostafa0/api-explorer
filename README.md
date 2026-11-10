@@ -4,7 +4,7 @@ A browser-based tool for composing HTTP requests and inspecting the responses. I
 careful request construction, an async lifecycle with cancellation and timeouts, honest error
 classification, and safe handling of untrusted responses.
 
-**Live demo:** LIVE_URL · **Status:** MVP (milestones 1–5) complete, see [STATUS.md](STATUS.md)
+**Live demo:** https://api-explorer-swart.vercel.app · **Status:** MVP (milestones 1–5) complete, see [STATUS.md](STATUS.md)
 
 ## What it does
 
