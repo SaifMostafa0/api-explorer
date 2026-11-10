@@ -174,12 +174,15 @@ export function WorkspacePage() {
             onChange={(event) => dispatch({ type: 'set-url', url: event.target.value })}
           />
 
+          {/* Distinct keys make React mount a fresh button instead of reusing the clicked one.
+              Without them, a real click on Cancel re-renders the same element as type="submit"
+              before the click's default action runs, so the form submits and the request re-sends. */}
           {running ? (
-            <button type="button" className={styles.cancel} onClick={cancel}>
+            <button key="cancel" type="button" className={styles.cancel} onClick={cancel}>
               Cancel
             </button>
           ) : (
-            <button type="submit" className={styles.send}>
+            <button key="send" type="submit" className={styles.send}>
               Send
             </button>
           )}
