@@ -2,7 +2,20 @@
 
 _Last updated: 10 Nov 2026_
 
-**Current milestone:** MVP deployed. Left for the MVP: the 60-second video in the README (Saif).
+**Current milestone:** MVP complete (M1–M5, deploy, demo video). Next, after the MVP: M6.
+
+## Demo video and Cancel fix (run 10 Nov 2026)
+
+- Demo video: `docs/media/demo.mp4` (57 s, 1280×720) and `demo.gif` (720 px preview) in the
+  README. Recorded on the live site with Playwright driving real mouse clicks; the cursor,
+  captions and spotlight are an overlay injected only into the recording browser.
+- Bug found while recording, fixed in PR #2: a **real mouse click on Cancel re-sent the request**.
+  Send and Cancel shared one React-reused `<button>`; after the click listener the abort settled,
+  React flipped that element to `type="submit"`, and the click's default action then submitted
+  the form. `element.click()` (and so the jsdom tests) didn't show it. Distinct `key`s fixed it.
+  Checked with Playwright on the live site after deploy: Send and Cancel by real mouse or by
+  `element.click()`, all four combinations cancel (before the fix, both real-mouse Cancel cases
+  failed). New regression test; `npm run ci` passed: 321 tests.
 
 ## MVP deploy (run 10 Nov 2026)
 
