@@ -262,6 +262,21 @@ describe('running, cancelling and timing out', () => {
     expect(sendButton()).toBeInTheDocument()
   })
 
+  it('cancel never re-submits the form: Send and Cancel are separate elements', async () => {
+    const transport = neverRespond()
+    const { user } = renderWorkspace({ transport })
+    await user.type(urlInput(), 'https://api.example.test{Enter}')
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' })
+    await user.click(cancelButton)
+    expect(await screen.findByText('Cancelled. No response was received.')).toBeInTheDocument()
+
+    // If React reused the Cancel button as the Send button, its type would become "submit"
+    // before the click's default action runs, re-submitting the form and re-sending.
+    expect(sendButton()).not.toBe(cancelButton)
+    expect(transport).toHaveBeenCalledTimes(1)
+  })
+
   it('sends once when Enter is pressed twice quickly', async () => {
     const transport = neverRespond()
     const { user } = renderWorkspace({ transport })
