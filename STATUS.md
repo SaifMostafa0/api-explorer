@@ -1,8 +1,29 @@
 # Status
 
-_Last updated: 8 Nov 2026_
+_Last updated: 10 Nov 2026_
 
-**Current milestone:** MVP deploy in progress. The MVP features (M1–M5) are complete.
+**Current milestone:** MVP deployed. Left for the MVP: the 60-second video in the README (Saif).
+
+## MVP deploy (run 10 Nov 2026)
+
+- Repo: https://github.com/SaifMostafa0/api-explorer (public). Vercel project `api-explorer`
+  builds `main` on push. Live: **https://api-explorer-swart.vercel.app**
+- Production build of `4856ef0` was READY on Vercel (Vite preset). The project's Node setting is
+  26.x, while local CI runs 22 and 24.
+- Checked with curl: `/`, `/settings` and an unknown path all return the app shell (200); a
+  missing `/assets/*.js` returns a real 404; the CSP, `X-Content-Type-Options`,
+  `Referrer-Policy` and `Permissions-Policy` headers are all sent. No Vercel login wall on the
+  production URL.
+- Checked in the in-app browser (Chromium; pane hidden, so no screenshots): `/settings` loaded
+  directly renders Settings; the "GET a product (JSON)" sample returned 200 in 621 ms with no
+  CORS or CSP block.
+- Found and fixed: Chromium rejected `http://[::1]:*` in `connect-src` (CSP host-sources can't be
+  IPv6 literals) and logged an error on every page load. Removed it; the deploy-config test now
+  fails if a `[` appears in the CSP. `npm run ci` passed on Windows (Node 24.21.0): 320 tests,
+  same coverage.
+- GitHub Actions still fails on the account billing lock, not on the code.
+- Not checked yet: the console after this fix is deployed, a screen reader, Lighthouse, the copy
+  button's success path in a normal browser.
 
 ## Deploy prep (run 8 Nov 2026, Windows)
 

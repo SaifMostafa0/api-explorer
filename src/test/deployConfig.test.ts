@@ -15,9 +15,8 @@ const directive = (name: string) =>
 
 describe('vercel.json', () => {
   it('lets the app call any https API and local dev servers, nothing else over http', () => {
-    expect(directive('connect-src')).toBe(
-      'connect-src https: http://localhost:* http://127.0.0.1:* http://[::1]:*',
-    )
+    expect(directive('connect-src')).toBe('connect-src https: http://localhost:* http://127.0.0.1:*')
+    expect(header('Content-Security-Policy')).not.toContain('[')
   })
 
   it('never allows inline or remote scripts, frames or plugins', () => {
