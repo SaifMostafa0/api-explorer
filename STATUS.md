@@ -4,6 +4,8 @@ _Last updated: 10 Nov 2026_
 
 **Current milestone:** MVP complete (M1–M5, deploy, demo video). Next, after the MVP: M6.
 
+History and Settings placeholders were removed from the nav and router until M6+ builds them.
+
 ## Demo video and Cancel fix (run 10 Nov 2026)
 
 - Demo video: `docs/media/demo.mp4` (57 s, 1280×720) and `demo.gif` (720 px preview) in the

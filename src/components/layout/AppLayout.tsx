@@ -16,12 +16,6 @@ export function AppLayout() {
                 Workspace
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/history">History</NavLink>
-            </li>
-            <li>
-              <NavLink to="/settings">Settings</NavLink>
-            </li>
           </ul>
         </nav>
       </header>
