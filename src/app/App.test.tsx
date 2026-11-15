@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { RouterProvider } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import { createTestRouter } from './router'
@@ -20,9 +19,14 @@ describe('app shell', () => {
     expect(screen.getByRole('link', { name: /back to the request workspace/i })).toHaveAttribute('href', '/')
   })
 
-  it('navigates between sections from the main nav', async () => {
+  it('does not link to pages that are not built yet', () => {
     renderAt('/')
-    await userEvent.click(screen.getByRole('link', { name: 'History' }))
-    expect(screen.getByRole('heading', { level: 1, name: 'History' })).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'History' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Settings' })).not.toBeInTheDocument()
+  })
+
+  it('shows the 404 page for a route that is not built yet', () => {
+    renderAt('/history')
+    expect(screen.getByRole('heading', { name: 'Page not found' })).toBeInTheDocument()
   })
 })
