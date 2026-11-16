@@ -1,8 +1,25 @@
 # Status
 
-_Last updated: 10 Nov 2026_
+_Last updated: 16 Nov 2026_
 
 **Current milestone:** MVP complete (M1–M5, deploy, demo video). Next, after the MVP: M6.
+
+## Playwright smoke suite (run 16 Nov 2026, Windows)
+
+- New `e2e/smoke.spec.ts`, four tests in real Chromium against the production build (`vite build`
+  then `vite preview` on port 4173). Every request the app makes is intercepted with
+  `page.route()` against the fake origin `https://api.example.test`; no third-party server is
+  reached. Covers: a GET showing the status and body, a real mouse click on Cancel (the PR #2
+  regression, which jsdom's `element.click()` could not reproduce), the empty-URL validation error
+  with focus moved to the URL and `aria-invalid="true"`, and an axe scan with the `wcag2a`,
+  `wcag2aa`, `wcag21a`, `wcag21aa` and `wcag22aa` tags on the fresh page and after a response.
+- `npm run test:e2e`: **4 passed** (chromium project). Both axe scans reported no violations, so
+  no test is marked `test.fixme`.
+- `npm run ci` passed after the change: 322 tests; gated coverage 99.47% statements and 95.4%
+  branches, the same as before (the branch figure moves by a few hundredths between runs; gates:
+  80 / 75). `test:e2e` is deliberately not part of `ci`, because the GitHub Actions job has no
+  browser installed.
+- Not yet done: the full E2E suite (milestone 9), a screen reader, Lighthouse.
 
 History and Settings placeholders were removed from the nav and router until M6+ builds them.
 
