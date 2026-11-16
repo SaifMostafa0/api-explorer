@@ -80,7 +80,7 @@ Requires Node 20.19 or newer.
 - Only APIs that allow cross-origin requests work from the hosted demo (see above).
 - Cookies are never sent (`credentials: 'omit'`).
 - Saved requests, history, environments and cURL import/export come after the MVP.
-- Not yet measured: Lighthouse scores, screen-reader testing, end-to-end tests (milestones 8–9).
+- Not yet measured: Lighthouse scores, screen-reader testing. A four-test Playwright smoke suite (`npm run test:e2e`) covers a real-browser send, cancel, validation and an axe scan; the full E2E suite is milestone 9.
 
 ## Docs
 

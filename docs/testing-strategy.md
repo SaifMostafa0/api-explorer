@@ -1,10 +1,10 @@
 # Testing strategy
 
-| Layer     | Tool                      | What                                                                          | When         |
-| --------- | ------------------------- | ----------------------------------------------------------------------------- | ------------ |
-| Unit      | Vitest                    | `domain/`, `http/`, `infrastructure/` — every case listed in spec §14         | M2–M3 onward |
-| Component | Vitest + RTL + user-event | Workspace and inspector through a fake `Transport`                            | M4–M5        |
-| E2E       | Playwright                | Flows in spec §14 with `page.route()` interception; no real third-party calls | M9           |
+| Layer     | Tool                      | What                                                                          | When                                                    |
+| --------- | ------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Unit      | Vitest                    | `domain/`, `http/`, `infrastructure/` — every case listed in spec §14         | M2–M3 onward                                            |
+| Component | Vitest + RTL + user-event | Workspace and inspector through a fake `Transport`                            | M4–M5                                                   |
+| E2E       | Playwright                | Flows in spec §14 with `page.route()` interception; no real third-party calls | Smoke suite now (`e2e/smoke.spec.ts`); full suite in M9 |
 
 - Coverage gates (in `vite.config.ts`): 80 % statements, 75 % branches for `src/domain`,
   `src/http`, `src/infrastructure`. UI glue isn't gated.
